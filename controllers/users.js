@@ -19,9 +19,10 @@ userRouter.post('/', async (req, res) => {
 
 })
 
-userRouter.get('/', async (req, res) => {
-  const users = await User.find({}).populate('exercises')
-  res.json(users)
+userRouter.get('/:id', async (req, res) => {
+  const id = req.params.id
+  const user = await User.findById(id)
+  res.status(200).json(user)
 })
 
 module.exports = userRouter

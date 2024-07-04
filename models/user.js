@@ -15,12 +15,7 @@ const userSchema = new mongoose.Schema({
       ref: "Workout",
     },
   ],
-  exercises: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Exercise",
-    }
-  ]
+  
 })
 
 userSchema.plugin(uniqueValidator)
