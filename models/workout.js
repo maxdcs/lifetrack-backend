@@ -1,23 +1,27 @@
-const User = require('../models/user')
 const mongoose = require("mongoose")
+const uniqueValidator = require("mongoose-unique-validator")
 
 const workoutSchema = new mongoose.Schema({
-  name: String,
-  createdAt: {
-    type: Date,
-    default: Date.now
-  },
-  user: {
+  name: { type: String, unique: true, required: true },
+  createdByUserId: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'User'
+    ref: "User",
+    required: true,
   },
   exercises: [
     {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Exercise'
-    }
-  ]
+      exercise: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Exercise",
+        required: true,
+      },
+      sets: { type: Number, required: true },
+      reps: { type: Number, required: true },
+    },
+  ],
 })
+
+workoutSchema.plugin(uniqueValidator)
 
 workoutSchema.set("toJSON", {
   transform: (document, returnedObject) => {
@@ -27,4 +31,4 @@ workoutSchema.set("toJSON", {
   },
 })
 
-module.exports = workoutSchema
+module.exports = mongoose.model("Workout", workoutSchema)
