@@ -1,6 +1,7 @@
 const workoutRouter = require("express").Router()
 const Workout = require("../models/workout")
 const User = require("../models/user")
+const { authenticateToken } = require("../utils/auth")
 
 workoutRouter.post("/", async (req, res) => {
   const { name, createdByUserId } = req.body
@@ -33,12 +34,24 @@ workoutRouter.post("/", async (req, res) => {
 })
 
 workoutRouter.get("/", async (req, res) => {
-  const {userId} = req.query
+  const { userId } = req.query
 
-  const workouts = await Workout.find({createdByUserId: userId})
-  
+  const workouts = await Workout.find({ createdByUserId: userId })
+
   res.status(200).json(workouts)
+})
 
+workoutRouter.delete("/:id", authenticateToken, async (req, res) => {
+  const idOfWorkoutToDelete = req.params.id
+  const userId = req.userId
+
+  console.log(`idOfWorkoutToDelete: ${idOfWorkoutToDelete}`)
+  console.log(`userId: ${userId}`)
+
+  // findbyIdAndDelete(idOfWorkoutToDelete)
+  // User.findByIdAndUpdate(userId, {$pull: {workouts: workoutId}})
+
+  res.json("hello")
 })
 
 module.exports = workoutRouter

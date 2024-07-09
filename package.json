@@ -7,7 +7,7 @@
     "start": "node index.js",
     "dev": "nodemon index.js",
     "build:ui": "rm -rf dist && cd ../frontend && npm run build && cp -r dist ../backend",
-    "deploy:full": "npm run build:ui && git add . && git commit -m \"Workout, Exercise, User schema built. Registration built. Tag invalidation on new Workout built.\" && git push",
+    "deploy:full": "npm run build:ui && git add . && git commit -m \"Workout page base styling done. Working on delete workout endpoint\" && git push",
     "test": "jest --verbose"
   },
   "author": "",
