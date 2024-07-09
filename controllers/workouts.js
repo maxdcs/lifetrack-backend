@@ -42,16 +42,24 @@ workoutRouter.get("/", async (req, res) => {
 })
 
 workoutRouter.delete("/:id", authenticateToken, async (req, res) => {
-  const idOfWorkoutToDelete = req.params.id
-  const userId = req.userId
+  const idOfWorkoutToDelete = req.params.id;
+  const userId = req.userId;
 
-  console.log(`idOfWorkoutToDelete: ${idOfWorkoutToDelete}`)
-  console.log(`userId: ${userId}`)
+  try {
+    const workoutToDelete = await Workout.findById(idOfWorkoutToDelete);
 
-  // findbyIdAndDelete(idOfWorkoutToDelete)
-  // User.findByIdAndUpdate(userId, {$pull: {workouts: workoutId}})
+    if (!workoutToDelete) {
+      return res.status(404).json({ error: "Workout with this id not found." });
+    }
 
-  res.json("hello")
-})
+    await Workout.findByIdAndDelete(idOfWorkoutToDelete);
+    await User.findByIdAndUpdate(userId, { $pull: { workouts: idOfWorkoutToDelete } });
+
+    res.status(200).json({ message: "Workout deleted successfully." });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "An error occurred while deleting the workout." });
+  }
+});
 
 module.exports = workoutRouter
