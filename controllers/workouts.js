@@ -3,7 +3,9 @@ const Workout = require("../models/workout")
 const User = require("../models/user")
 const { authenticateToken } = require("../utils/auth")
 
-workoutRouter.post("/", async (req, res) => {
+
+
+workoutRouter.post("/", authenticateToken, async (req, res) => {
   const { name, createdByUserId } = req.body
 
   console.log(`body: ${name}, ${createdByUserId}`)
