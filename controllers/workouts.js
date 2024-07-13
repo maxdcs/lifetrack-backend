@@ -6,11 +6,12 @@ const { authenticateToken } = require("../utils/auth")
 
 
 workoutRouter.post("/", authenticateToken, async (req, res) => {
-  const { name, createdByUserId } = req.body
+  const { name} = req.body
+  const userId = req.userId
 
-  console.log(`body: ${name}, ${createdByUserId}`)
+  console.log(`body: ${name}, ${userId}`)
 
-  const userFound = await User.findById(createdByUserId).populate("workouts")
+  const userFound = await User.findById(userId).populate("workouts")
 
   const workoutWithThisNameExists = userFound.workouts.find(
     (workout) => workout.name === name
@@ -22,7 +23,7 @@ workoutRouter.post("/", authenticateToken, async (req, res) => {
   console.log(`Attempting to create a new workout...`)
   const newWorkout = new Workout({
     name: name,
-    createdByUserId: createdByUserId,
+    createdByUserId: userId,
   })
 
   console.log(newWorkout)
@@ -32,7 +33,8 @@ workoutRouter.post("/", authenticateToken, async (req, res) => {
   userFound.workouts.push(savedWorkout._id)
   await userFound.save()
 
-  res.status(201).json(newWorkout)
+  
+  res.status(201).json(savedWorkout)
 })
 
 workoutRouter.get("/", async (req, res) => {

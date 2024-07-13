@@ -15,16 +15,16 @@ const userSchema = new mongoose.Schema({
       ref: "Workout",
     },
   ],
-  completedSetsHistory: [
+  workoutLogs: [
     {
-      exercise: {
+      exercises: [{exercise: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Exercise",
         required: true,
       },
-      repetitions: {type: Number, required: true},
-      weight: {type: Number, required: true},
-      date: { type: Date, default: Date.now },
+      repetitions: { type: Number, required: true },
+      weight: { type: Number, required: true },
+      date: { type: Date, default: Date.now },}]
     },
   ],
 })
