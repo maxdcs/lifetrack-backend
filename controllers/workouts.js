@@ -45,6 +45,22 @@ workoutRouter.get("/", async (req, res) => {
   res.status(200).json(workouts)
 })
 
+workoutRouter.get("/:id", async (req, res) => {
+  const workoutId = req.params.id
+
+  if (!workoutId) {
+    return res.status(400).json({error: "Workout id is required"})
+  }
+
+  const workout = await Workout.findById(workoutId)
+
+  if (!workout){
+    return res.status(404).json({error: "Workout not found"})
+  }
+
+  res.status(200).json(workout)
+})
+
 workoutRouter.delete("/:id", authenticateToken, async (req, res) => {
   const idOfWorkoutToDelete = req.params.id;
   const userId = req.userId;
