@@ -7,7 +7,7 @@
     "start": "node index.js",
     "dev": "nodemon index.js",
     "build:ui": "rm -rf dist && cd ../frontend && npm run build && cp -r dist ../backend",
-    "deploy:full": "npm run build:ui && git add . && git commit -m \"Added Discard Changes modal to EditWorkout\" && git push",
+    "deploy:full": "npm run build:ui && git add . && git commit -m \"Add exercise selection done, add button styling done\" && git push",
     "test": "jest --verbose"
   },
   "author": "",
