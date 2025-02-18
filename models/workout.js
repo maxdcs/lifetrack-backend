@@ -15,8 +15,10 @@ const workoutSchema = new mongoose.Schema({
         ref: "Exercise",
         required: true,
       },
+      instanceId: { type: String, required: true },
       sets: { type: Number, required: true },
       reps: { type: Number, required: true },
+      
     },
   ],
 })

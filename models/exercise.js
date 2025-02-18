@@ -2,7 +2,13 @@ const mongoose = require("mongoose")
 
 const exerciseSchema = new mongoose.Schema({
   name: { type: String, required: true },
-})
+  muscleGroup: { type: String, required: true },
+  repsType: { 
+      type: String, 
+      enum: ["repetitions", "seconds", "seconds-weight"], 
+      required: true 
+  }
+});
 
 exerciseSchema.set("toJSON", {
   transform: (document, returnedObject) => {
