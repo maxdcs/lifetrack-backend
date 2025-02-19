@@ -17,7 +17,6 @@ exerciseRouter.post("/", async (request, response) => {
     const savedExercise = await newExercise.save()
     response.json(savedExercise)
 })
-
 // Get all exercises
 exerciseRouter.get("/", async (request, response) => {
   const exercises = await Exercise.find({})
