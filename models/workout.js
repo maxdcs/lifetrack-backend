@@ -2,26 +2,17 @@ const mongoose = require("mongoose")
 const uniqueValidator = require("mongoose-unique-validator")
 
 const workoutSchema = new mongoose.Schema({
-  name: { type: String, unique: true, required: true },
-  createdByUserId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "User",
-    required: true,
-  },
+  name: String,
+  createdByUserId: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
   exercises: [
     {
-      exercise: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Exercise",
-        required: true,
-      },
-      instanceId: { type: String, required: true },
-      sets: { type: Number, required: true },
-      reps: { type: Number, required: true },
-      
-    },
+      exercise: { type: mongoose.Schema.Types.ObjectId, ref: "Exercise", required: true },
+      instanceId: { type: String, required: true }, 
+      plannedSets: { type: Number, default: 3 },
+      plannedReps: { type: Number, default: 10 },
+    }
   ],
-})
+});
 
 workoutSchema.plugin(uniqueValidator)
 
