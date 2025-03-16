@@ -14,19 +14,7 @@ const userSchema = new mongoose.Schema({
       type: mongoose.Schema.Types.ObjectId,
       ref: "Workout",
     },
-  ],
-  workoutLogs: [
-    {
-      exercises: [{exercise: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Exercise",
-        required: true,
-      },
-      repetitions: { type: Number, required: true },
-      weight: { type: Number, required: true },
-      date: { type: Date, default: Date.now },}]
-    },
-  ],
+  ]
 })
 
 userSchema.plugin(uniqueValidator)

@@ -6,10 +6,8 @@ const { authenticateToken } = require("../utils/auth")
 
 
 workoutRouter.post("/", authenticateToken, async (req, res) => {
-  const { name} = req.body
+  const { name } = req.body
   const userId = req.userId
-
-  console.log(`body: ${name}, ${userId}`)
 
   const userFound = await User.findById(userId).populate("workouts")
 
@@ -20,32 +18,28 @@ workoutRouter.post("/", authenticateToken, async (req, res) => {
     res.status(400).json({ error: "Workout with this name already exists" })
   }
 
-  console.log(`Attempting to create a new workout...`)
   const newWorkout = new Workout({
     name: name,
     createdByUserId: userId,
   })
 
-  console.log(newWorkout)
-
   const savedWorkout = await newWorkout.save()
 
   userFound.workouts.push(savedWorkout._id)
   await userFound.save()
-
   
   res.status(201).json(savedWorkout)
 })
 
-workoutRouter.get("/", async (req, res) => {
-  const { userId } = req.query
+workoutRouter.get("/", authenticateToken, async (req, res) => {
+  const userId = req.userId
 
   const workouts = await Workout.find({ createdByUserId: userId })
 
   res.status(200).json(workouts)
 })
 
-workoutRouter.get("/:id", async (req, res) => {
+workoutRouter.get("/:id", authenticateToken, async (req, res) => {
   const workoutId = req.params.id
 
   if (!workoutId) {

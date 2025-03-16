@@ -12,6 +12,7 @@ const workoutSchema = new mongoose.Schema({
       plannedReps: { type: Number, default: 10 },
     }
   ],
+  createdAt: { type: Date, default: Date.now }
 });
 
 workoutSchema.plugin(uniqueValidator)
