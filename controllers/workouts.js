@@ -78,7 +78,7 @@ workoutRouter.put("/:id", authenticateToken, async (req, res) => {
    workoutId,
    {
     name: workoutFormData.name,
-    exercises: workoutFormData.exercises,
+    exercises: workoutFormData.exercises
    },
    { new: true }
   )
