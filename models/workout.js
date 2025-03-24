@@ -6,13 +6,12 @@ const workoutSchema = new mongoose.Schema({
   createdByUserId: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
   exercises: [
     {
-      exercise: { type: mongoose.Schema.Types.ObjectId, ref: "Exercise", required: true },
+      exerciseId: { type: mongoose.Schema.Types.ObjectId, ref: "Exercise", required: true },
       instanceId: { type: String, required: true }, 
       plannedSets: { type: Number, default: 3 },
       plannedReps: { type: Number, default: 10 },
     }
   ],
-  createdAt: { type: Date, default: Date.now }
 });
 
 workoutSchema.plugin(uniqueValidator)
