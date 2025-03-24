@@ -7,7 +7,7 @@
     "start": "node index.js",
     "dev": "nodemon index.js",
     "build:ui": "rm -rf dist && cd ../frontend && npm run build && cp -r dist ../backend",
-    "deploy:full": "npm run build:ui && git add . && git commit -m \"Remove instanceID, mongoose adds _id by itself\" && git push",
+    "deploy:full": "npm run build:ui && git add . && git commit -m \"Solve _id transform by iterating over array in WorkoutSchema\" && git push",
     "test": "jest --verbose"
   },
   "author": "",

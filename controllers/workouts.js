@@ -46,8 +46,9 @@ workoutRouter.get("/:id", async (req, res) => {
  if (!workoutId) {
   return res.status(400).json({ error: "Workout id is required" })
  }
-
- const workout = await Workout.findById(workoutId).populate("exercises")
+ const workout = await Workout.findById(workoutId).populate("exercises.exerciseId")
+ console.log(`workout found: ${workout}`)
+ 
 
  if (!workout) {
   return res.status(404).json({ error: "Workout not found" })

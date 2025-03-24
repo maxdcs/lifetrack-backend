@@ -11,7 +11,7 @@ const workoutSchema = new mongoose.Schema({
       plannedReps: { type: Number, default: 10 },
     }
   ],
-});
+}, { timestamps: true });
 
 workoutSchema.plugin(uniqueValidator)
 
@@ -20,6 +20,15 @@ workoutSchema.set("toJSON", {
     returnedObject.id = returnedObject._id.toString()
     delete returnedObject._id
     delete returnedObject.__v
+
+    if (returnedObject.exercises && Array.isArray(returnedObject.exercises)) {
+      returnedObject.exercises.forEach((exercise) => {
+        if (exercise._id) {
+          exercise.id = exercise._id.toString()
+          delete exercise._id
+        }
+      })
+    }
   },
 })
 
