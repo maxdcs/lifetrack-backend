@@ -7,7 +7,7 @@
     "start": "node index.js",
     "dev": "nodemon index.js",
     "build:ui": "rm -rf dist && cd ../frontend && npm run build && cp -r dist ../backend",
-    "deploy:full": "npm run build:ui && git add . && git commit -m \"Implement basic structure for sets and reps in EditWorkout\" && git push",
+    "deploy:full": "npm run build:ui && git add . && git commit -m \"Implement controlled inputs for sets and reps of exercises in EditWorkout\" && git push",
     "test": "jest --verbose"
   },
   "author": "",

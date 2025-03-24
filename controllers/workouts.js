@@ -46,13 +46,13 @@ workoutRouter.get("/:id", async (req, res) => {
  if (!workoutId) {
   return res.status(400).json({ error: "Workout id is required" })
  }
- const workout = await Workout.findById(workoutId).populate("exercises.exerciseId")
- 
+ const workout = await Workout.findById(workoutId).populate(
+  "exercises.exerciseId"
+ )
 
  if (!workout) {
   return res.status(404).json({ error: "Workout not found" })
  }
- console.log(`${workout}`)
  res.status(200).json(workout)
 })
 
@@ -73,12 +73,17 @@ workoutRouter.put("/:id", authenticateToken, async (req, res) => {
    return res.status(403).json({ error: "Not authorized" })
   }
 
+  const sanitizedExercises = workoutFormData.exercises.map((e) => ({
+   ...e,
+   exerciseId: e.exerciseId.id,
+  }))
+
   // Validate exercises format if needed
   const updatedWorkout = await Workout.findByIdAndUpdate(
    workoutId,
    {
     name: workoutFormData.name,
-    exercises: workoutFormData.exercises
+    exercises: sanitizedExercises,
    },
    { new: true }
   )
