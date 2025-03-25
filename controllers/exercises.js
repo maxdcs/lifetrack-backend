@@ -12,7 +12,6 @@ exerciseRouter.post("/", async (request, response) => {
     const newExercise = new Exercise({
       name: body.name,
       muscleGroup: body.muscleGroup,
-      repsType: body.repsType
     })
     const savedExercise = await newExercise.save()
     response.json(savedExercise)
